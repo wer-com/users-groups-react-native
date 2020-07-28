@@ -13,7 +13,7 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome";
 
 export default function AddUserToGroup(props) {
-  const { groupId } = props.route.params;
+  const { groupId, getGroup } = props.route.params;
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -40,6 +40,7 @@ export default function AddUserToGroup(props) {
       .then(() => {
         {
           alert("User has been added");
+          getGroup();
         }
       })
       .catch((err) => {

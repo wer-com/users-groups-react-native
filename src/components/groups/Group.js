@@ -12,7 +12,7 @@ import api from "../api";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 export default function Group(props) {
-  const { groupId } = props.route.params;
+  const { groupId, getGroups } = props.route.params;
   const { navigation } = props;
   const [group, setGroup] = useState({});
   const [loading, setLoading] = useState(false);
@@ -46,6 +46,7 @@ export default function Group(props) {
       .then(() => {
         {
           getGroup();
+          getGroups();
         }
       })
       .catch((err) => {
@@ -58,7 +59,8 @@ export default function Group(props) {
       .delete(`/groups/${groupId}`)
       .then(() => {
         {
-          navigation.navigate("Home");
+          getGroups();
+          navigation.navigate("Groups");
         }
       })
       .catch((err) => {
@@ -81,6 +83,7 @@ export default function Group(props) {
             navigation.navigate("EditGroup", {
               groupId: group._id,
               groupName: group.name,
+              getGroups,
             })
           }
         >
@@ -94,7 +97,10 @@ export default function Group(props) {
         title="ADD USERS TO GROUP"
         color="#34495e"
         onPress={() =>
-          navigation.navigate("AddUserToGroup", { groupId: group._id })
+          navigation.navigate("AddUserToGroup", {
+            groupId: group._id,
+            getGroup,
+          })
         }
       />
       <View style={{ marginTop: 10 }}></View>

@@ -29,11 +29,18 @@ export default function Users({ navigation }) {
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("AddUser")}
+        onPress={() =>
+          navigation.navigate("AddUser", { refreshUsers: getUsers })
+        }
       >
         <Icon name="plus" size={25} color="#fff" />
       </TouchableOpacity>
-      <DisplayUsers navigation={navigation} users={users} loading={loading} />
+      <DisplayUsers
+        getUsers={getUsers}
+        navigation={navigation}
+        users={users}
+        loading={loading}
+      />
     </View>
   );
 }

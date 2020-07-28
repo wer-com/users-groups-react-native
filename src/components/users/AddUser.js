@@ -14,7 +14,7 @@ function reducer(state, { field, value }) {
   return { ...state, [field]: value };
 }
 
-export default function AddUser({ navigation }) {
+export default function AddUser({ route, navigation }) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -32,7 +32,8 @@ export default function AddUser({ navigation }) {
     api
       .post("/users", newUser)
       .then(() => {
-        navigation.navigate("Home");
+        route.params.refreshUsers();
+        navigation.navigate("Users");
       })
       .catch((err) => {
         if (err.response) {

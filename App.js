@@ -12,14 +12,22 @@ import Group from "./src/components/groups/Group";
 import EditGroup from "./src/components/groups/EditGroup";
 import AddGroup from "./src/components/groups/AddGroup";
 import AddUserToGroup from "./src/components/groups/AddUserToGroup";
-
+import { YellowBox } from "react-native";
 const Stack = createStackNavigator();
+
+YellowBox.ignoreWarnings([
+  "Non-serializable values were found in the navigation state",
+]);
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen
+          name="Home"
+          options={{ headerShown: false }}
+          component={Home}
+        />
         <Stack.Screen name="Users" component={Users} />
         <Stack.Screen name="User" component={User} />
         <Stack.Screen name="AddUser" component={AddUser} />

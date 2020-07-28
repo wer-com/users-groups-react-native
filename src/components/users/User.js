@@ -12,7 +12,7 @@ import api from "../api";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 export default function User(props) {
-  const { userId } = props.route.params;
+  const { userId, refreshUsers } = props.route.params;
   const { navigation } = props;
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
@@ -45,7 +45,8 @@ export default function User(props) {
       .delete(`/users/${userId}`)
       .then(() => {
         {
-          navigation.navigate("Home");
+          refreshUsers();
+          navigation.navigate("Users");
         }
       })
       .catch((err) => {
@@ -71,7 +72,12 @@ export default function User(props) {
       <View style={styles.icons}>
         <TouchableOpacity
           style={{ padding: 15 }}
-          onPress={() => navigation.navigate("EditUser", { user: user })}
+          onPress={() =>
+            navigation.navigate("EditUser", {
+              user: user,
+              refreshUsers,
+            })
+          }
         >
           <Icon name="pencil" size={25} color="#34495e" />
         </TouchableOpacity>

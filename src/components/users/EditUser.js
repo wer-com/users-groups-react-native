@@ -7,7 +7,7 @@ function reducer(state, { field, value }) {
 }
 
 export default function EditUser({ navigation, route }) {
-  const { user } = route.params;
+  const { user, refreshUsers } = route.params;
 
   const { username, name, lastName } = user;
 
@@ -33,11 +33,16 @@ export default function EditUser({ navigation, route }) {
       lastName: state.lastName,
       dateOfBirth: state.birth,
     };
+    if (state.password.length < 7 || state.username.length < 7) {
+      setError("Password And Username has to be at least 7 characters");
+      return;
+    }
     setLoading(true);
     api
       .put(`/users/${user._id}`, editedUser)
       .then(() => {
-        navigation.navigate("Home");
+        refreshUsers();
+        navigation.navigate("Users");
       })
       .catch((err) => {
         if (err.response) {

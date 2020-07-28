@@ -9,11 +9,18 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-export default function DisplayGroups({ groups, loading, navigation }) {
+export default function DisplayGroups({
+  groups,
+  loading,
+  navigation,
+  getGroups,
+}) {
   const renderItem = ({ item }) => {
     return (
       <TouchableOpacity
-        onPress={() => navigation.navigate("Group", { groupId: item._id })}
+        onPress={() =>
+          navigation.navigate("Group", { groupId: item._id, getGroups })
+        }
       >
         <View>
           <Text style={styles.listElement}>

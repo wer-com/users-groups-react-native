@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "felg-dent-task-front",
-    "slug": "felg-dent-task-front",
+    "name": "users-groups",
+    "slug": "users-groups",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,6 +21,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": ""
   }
 }

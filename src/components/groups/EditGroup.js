@@ -3,7 +3,7 @@ import api from "../api";
 import FormGroup from "./FormGroup";
 
 export default function EditGroup({ navigation, route }) {
-  const { groupId, groupName } = route.params;
+  const { groupId, groupName, getGroups } = route.params;
   const [name, setName] = useState(groupName);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -16,7 +16,8 @@ export default function EditGroup({ navigation, route }) {
     api
       .put(`/groups/${groupId}`, editedGroup)
       .then(() => {
-        navigation.navigate("Home");
+        getGroups();
+        navigation.navigate("Groups");
       })
       .catch((err) => {
         if (err.response) {

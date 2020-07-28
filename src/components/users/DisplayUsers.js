@@ -9,11 +9,16 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-export default function DisplayUsers({ users, loading, navigation }) {
+export default function DisplayUsers({ getUsers, users, loading, navigation }) {
   const renderItem = ({ item }) => {
     return (
       <TouchableOpacity
-        onPress={() => navigation.navigate("User", { userId: item._id })}
+        onPress={() =>
+          navigation.navigate("User", {
+            userId: item._id,
+            refreshUsers: getUsers,
+          })
+        }
       >
         <View>
           <Text style={styles.listElement}>

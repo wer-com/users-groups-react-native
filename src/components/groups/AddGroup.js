@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import api from "../api";
 import FormGroup from "./FormGroup";
 
-export default function AddGroup({ navigation }) {
+export default function AddGroup({ navigation, route }) {
   const [name, setName] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const { getGroups } = route.params;
 
   const submitGroup = () => {
     const newGroup = {
@@ -15,7 +16,8 @@ export default function AddGroup({ navigation }) {
     api
       .post("/groups", newGroup)
       .then(() => {
-        navigation.navigate("Home");
+        getGroups();
+        navigation.navigate("Groups");
       })
       .catch((err) => {
         if (err.response) {

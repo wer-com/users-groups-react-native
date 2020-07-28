@@ -2,18 +2,19 @@ import React, { useState } from "react";
 import api from "../api";
 import FormGroup from "./FormGroup";
 
-export default function AddGroup({ navigation }) {
-  const [name, setName] = useState("");
+export default function EditGroup({ navigation, route }) {
+  const { groupId, groupName } = route.params;
+  const [name, setName] = useState(groupName);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const submitGroup = () => {
-    const newGroup = {
+    const editedGroup = {
       name,
     };
     setLoading(true);
     api
-      .post("/groups", newGroup)
+      .put(`/groups/${groupId}`, editedGroup)
       .then(() => {
         navigation.navigate("Home");
       })
@@ -43,6 +44,7 @@ export default function AddGroup({ navigation }) {
       name={name}
       submitGroup={submitGroup}
       setGroupName={setGroupName}
+      edit={true}
     />
   );
 }

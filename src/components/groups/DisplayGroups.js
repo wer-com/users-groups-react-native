@@ -12,7 +12,9 @@ import Icon from "react-native-vector-icons/FontAwesome";
 export default function DisplayGroups({ groups, loading, navigation }) {
   const renderItem = ({ item }) => {
     return (
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Group", { groupId: item._id })}
+      >
         <View>
           <Text style={styles.listElement}>
             <Icon name="group" size={20} color="#34495e" /> {item.name}

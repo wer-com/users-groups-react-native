@@ -29,7 +29,7 @@ export default function Groups({ navigation }) {
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("AddUser")}
+        onPress={() => navigation.navigate("AddGroup")}
       >
         <Icon name="plus" size={25} color="#fff" />
       </TouchableOpacity>

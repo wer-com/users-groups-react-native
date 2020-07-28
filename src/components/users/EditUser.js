@@ -2,35 +2,40 @@ import React, { useReducer, useState } from "react";
 import api from "../api";
 import FormUser from "./FormUser";
 
-const initialState = {
-  username: "",
-  password: "",
-  name: "",
-  lastName: "",
-  birth: "",
-};
-
 function reducer(state, { field, value }) {
   return { ...state, [field]: value };
 }
 
-export default function AddUser({ navigation }) {
+export default function EditUser({ navigation, route }) {
+  const { user } = route.params;
+
+  const { username, name, lastName } = user;
+
+  const birth = user.dateOfBirth;
+
+  const initialState = {
+    username,
+    password: "",
+    name,
+    lastName,
+    birth,
+  };
+
   const [state, dispatch] = useReducer(reducer, initialState);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { username, password, name, lastName, birth } = state;
 
   const submitUser = () => {
-    const newUser = {
-      username,
-      password,
-      name,
-      lastName,
-      dateOfBirth: birth,
+    const editedUser = {
+      username: state.username,
+      password: state.password,
+      name: state.name,
+      lastName: state.lastName,
+      dateOfBirth: state.birth,
     };
     setLoading(true);
     api
-      .post("/users", newUser)
+      .put(`/users/${user._id}`, editedUser)
       .then(() => {
         navigation.navigate("Home");
       })
@@ -60,6 +65,7 @@ export default function AddUser({ navigation }) {
       state={state}
       submitUser={submitUser}
       setUser={setUser}
+      edit={true}
     />
   );
 }

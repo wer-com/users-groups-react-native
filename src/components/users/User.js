@@ -69,7 +69,10 @@ export default function User(props) {
         <Text>Date of birth: {user.dateOfBirth}</Text>
       </View>
       <View style={styles.icons}>
-        <TouchableOpacity style={{ padding: 15 }}>
+        <TouchableOpacity
+          style={{ padding: 15 }}
+          onPress={() => navigation.navigate("EditUser", { user: user })}
+        >
           <Icon name="pencil" size={25} color="#34495e" />
         </TouchableOpacity>
         <TouchableOpacity style={{ padding: 15 }} onPress={deleteUser}>

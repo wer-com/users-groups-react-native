@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,7 +6,10 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
+  View,
+  Button,
 } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function FormUser({
   state,
@@ -15,8 +18,13 @@ export default function FormUser({
   submitUser,
   setUser,
   edit,
+  date,
+  onChange,
+  show,
+  showMode,
 }) {
   const { username, password, name, lastName, birth } = state;
+
   return (
     <ScrollView style={styles.container}>
       {loading ? <ActivityIndicator size={45} color="#34495e" /> : null}
@@ -48,17 +56,26 @@ export default function FormUser({
         onChangeText={(lastName) => setUser("lastName", lastName)}
         value={lastName}
       />
-      <Text style={styles.text}>*Date Of Birth</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={(birth) => setUser("birth", birth)}
-        value={birth}
-      />
+      <View style={styles.datepicker}>
+        <Button color="gray" onPress={showMode} title="Pick Date Of Birth" />
+      </View>
       <TouchableOpacity style={styles.button} onPress={submitUser}>
         <Text style={{ color: "#fff", fontSize: 25 }}>
           {edit ? "Edit User" : "Add User"}
         </Text>
       </TouchableOpacity>
+      <View>
+        {show && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            mode={"date"}
+            is24Hour={true}
+            display="default"
+            onChange={onChange}
+          />
+        )}
+      </View>
     </ScrollView>
   );
 }
@@ -87,5 +104,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "center",
+  },
+  datepicker: {
+    paddingTop: 20,
+    paddingBottom: 20,
   },
 });

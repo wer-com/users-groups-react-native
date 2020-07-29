@@ -9,21 +9,30 @@ function reducer(state, { field, value }) {
 export default function EditUser({ navigation, route }) {
   const { user, refreshUsers } = route.params;
 
-  const { username, name, lastName } = user;
-
-  const birth = user.dateOfBirth;
+  const { username, name, lastName, dateOfBirth } = user;
 
   const initialState = {
     username,
     password: "",
     name,
     lastName,
-    birth,
   };
 
+  const [date, setDate] = useState(new Date(dateOfBirth));
+  const [show, setShow] = useState(false);
   const [state, dispatch] = useReducer(reducer, initialState);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === "ios");
+    setDate(currentDate);
+  };
+
+  const showMode = () => {
+    setShow(true);
+  };
 
   const submitUser = () => {
     const editedUser = {
@@ -31,7 +40,7 @@ export default function EditUser({ navigation, route }) {
       password: state.password,
       name: state.name,
       lastName: state.lastName,
-      dateOfBirth: state.birth,
+      dateOfBirth: date,
     };
     if (state.password.length < 7 || state.username.length < 7) {
       setError("Password And Username has to be at least 7 characters");
@@ -71,6 +80,10 @@ export default function EditUser({ navigation, route }) {
       submitUser={submitUser}
       setUser={setUser}
       edit={true}
+      date={date}
+      onChange={onChange}
+      show={show}
+      showMode={showMode}
     />
   );
 }

@@ -7,7 +7,6 @@ const initialState = {
   password: "",
   name: "",
   lastName: "",
-  birth: "",
 };
 
 function reducer(state, { field, value }) {
@@ -15,10 +14,23 @@ function reducer(state, { field, value }) {
 }
 
 export default function AddUser({ route, navigation }) {
+  const [date, setDate] = useState(new Date(1598051730000));
+  const [show, setShow] = useState(false);
   const [state, dispatch] = useReducer(reducer, initialState);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
   const { username, password, name, lastName, birth } = state;
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === "ios");
+    setDate(currentDate);
+  };
+
+  const showMode = () => {
+    setShow(true);
+  };
 
   const submitUser = () => {
     const newUser = {
@@ -26,7 +38,7 @@ export default function AddUser({ route, navigation }) {
       password,
       name,
       lastName,
-      dateOfBirth: birth,
+      dateOfBirth: date,
     };
     setLoading(true);
     api
@@ -61,6 +73,10 @@ export default function AddUser({ route, navigation }) {
       state={state}
       submitUser={submitUser}
       setUser={setUser}
+      date={date}
+      onChange={onChange}
+      show={show}
+      showMode={showMode}
     />
   );
 }

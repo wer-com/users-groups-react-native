@@ -130,9 +130,9 @@ export default function Group(props) {
   );
 
   return (
-    <View>
+    <ScrollView>
       {loading ? <ActivityIndicator size={45} color="#34495e" /> : displayGroup}
-    </View>
+    </ScrollView>
   );
 }
 

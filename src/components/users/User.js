@@ -105,9 +105,9 @@ export default function User(props) {
   );
 
   return (
-    <View>
+    <ScrollView>
       {loading ? <ActivityIndicator size={45} color="#34495e" /> : displayUser}
-    </View>
+    </ScrollView>
   );
 }
 
